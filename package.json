@@ -1,6 +1,6 @@
 {
   "name": "tgbox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight free cloud storage solution using Telegram as backend.",
   "main": "index.js",
   "repository": {

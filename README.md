@@ -9,6 +9,10 @@ programmatic interface for using it like a cloud drive.
 
 ## Installation
 
+[![npm package](https://img.shields.io/npm/v/tgbox)](https://www.npmjs.com/package/tgbox)
+
+The package is available on [npm](https://www.npmjs.com/package/tgbox).
+
 ```bash
 npm install tgbox
 ```
