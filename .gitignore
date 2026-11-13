@@ -1,0 +1,8 @@
+node_modules/
+session.txt
+.env
+.env.*
+!.env.example
+*.tgz
+downloaded_sample.txt
+npm-debug.log*
