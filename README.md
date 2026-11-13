@@ -1,13 +1,29 @@
 # TgBox
 
-TgBox is a small Node.js library that uses Telegram as a backend for storing
-files and sending messages.
+TgBox is a lightweight cloud storage service for Node.js that uses Telegram as
+its storage medium. It lets you use Telegram chats and channels as personal or
+shared cloud storage for uploading, downloading, searching, and managing files.
+
+Telegram provides the storage infrastructure, while TgBox provides a simple
+programmatic interface for using it like a cloud drive.
 
 ## Installation
 
 ```bash
 npm install tgbox
 ```
+
+## How it works
+
+TgBox stores files as Telegram document messages in a chat or channel. The
+Telegram message ID acts as the file ID, so files can later be listed, searched,
+downloaded, or deleted through the TgBox API.
+
+The target can be:
+
+- `me` for Telegram Saved Messages
+- a username such as `@mychannel`
+- another Telegram chat or channel the account can access
 
 ## Telegram API credentials
 
