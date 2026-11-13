@@ -1,7 +1,7 @@
 # TgBox
 
-TgBox ist eine kleine Node.js-Bibliothek, die Telegram als Speicher-Backend
-für Dateien und Nachrichten verwendet.
+TgBox is a small Node.js library that uses Telegram as a backend for storing
+files and sending messages.
 
 ## Installation
 
@@ -9,10 +9,10 @@ für Dateien und Nachrichten verwendet.
 npm install tgbox
 ```
 
-## Telegram API-Zugang
+## Telegram API credentials
 
-Für die Verbindung werden eine Telegram `apiId` und ein `apiHash` benötigt.
-Beide Werte erhältst du unter [my.telegram.org](https://my.telegram.org).
+You need a Telegram `apiId` and `apiHash` to connect. You can get both values
+from [my.telegram.org](https://my.telegram.org).
 
 ```js
 const TgBox = require('tgbox');
@@ -25,14 +25,14 @@ const storage = new TgBox(
 await storage.init();
 ```
 
-Beim ersten Start werden Telefonnummer, Login-Code und gegebenenfalls das
-2FA-Passwort abgefragt. Die Session wird anschließend lokal in `session.txt`
-gespeichert. Diese Datei darf niemals veröffentlicht oder geteilt werden.
+On the first start, TgBox asks for your phone number, login code, and, if
+configured, your 2FA password. The session is then stored locally in
+`session.txt`. Never publish or share this file.
 
-## Dateien hochladen
+## Upload files
 
 ```js
-const result = await storage.upload('./documents/report.pdf', '@meinchannel');
+const result = await storage.upload('./documents/report.pdf', '@mychannel');
 
 if (result.success) {
   console.log(result.messageId);
@@ -42,13 +42,13 @@ if (result.success) {
 }
 ```
 
-Der Standard-Chat ist `me` (gespeicherte Nachrichten). Telegram-Dateigrößen
-werden in `size` als Bytes zurückgegeben.
+The default chat is `me` (Saved Messages). Telegram file sizes are returned in
+`size` as bytes.
 
-## Dateien auflisten
+## List files
 
 ```js
-const result = await storage.listFiles('@meinchannel');
+const result = await storage.listFiles('@mychannel');
 
 if (result.success) {
   result.files.forEach((file) => {
@@ -57,47 +57,47 @@ if (result.success) {
 }
 ```
 
-Jedes Dateiobjekt enthält unter anderem:
+Each file object contains, among other fields:
 
 - `messageId`
 - `fileName`
-- `size` in Bytes
+- `size` in bytes
 - `mimeType`
 - `date`
 - `caption`
-- `telegram` mit den vollständigen Telegram-Daten der Nachricht und des Dokuments
+- `telegram` with the complete Telegram message and document data
 
-## Dateien suchen
+## Search files
 
-Die Suche berücksichtigt Dateiname, Caption und Message-ID:
+The search checks the file name, caption, and message ID:
 
 ```js
-const result = await storage.searchFiles('report', '@meinchannel');
+const result = await storage.searchFiles('report', '@mychannel');
 
 result.files.forEach((file) => {
   console.log(file);
 });
 ```
 
-Für eine exakte Suche nach ID oder Dateiname:
+For an exact search by ID or file name:
 
 ```js
-const result = await storage.findFile('report.pdf', '@meinchannel');
+const result = await storage.findFile('report.pdf', '@mychannel');
 
 result.files.forEach((file) => {
   console.log(file.messageId, file.fileName);
 });
 ```
 
-Mehrere Dateien mit demselben Namen werden vollständig zurückgegeben.
+All files with the same name are returned.
 
-## Dateien herunterladen
+## Download files
 
 ```js
 const result = await storage.download(
   123,
   './downloads/report.pdf',
-  '@meinchannel',
+  '@mychannel',
 );
 
 if (!result.success) {
@@ -105,33 +105,32 @@ if (!result.success) {
 }
 ```
 
-## Dateien löschen
+## Delete files
 
-Eine oder mehrere Dateien können über ihre Telegram-Message-ID gelöscht
-werden:
+You can delete one or more files by their Telegram message IDs:
 
 ```js
-await storage.deleteFile(123, '@meinchannel');
-await storage.deleteFile([123, 124], '@meinchannel');
+await storage.deleteFile(123, '@mychannel');
+await storage.deleteFile([123, 124], '@mychannel');
 ```
 
-Das Löschen erfolgt dauerhaft mit `revoke: true`. Dafür werden im Channel oder
-Chat die entsprechenden Telegram-Berechtigungen benötigt.
+Deletion is permanent and uses `revoke: true`. Your Telegram account needs the
+required permissions in the target chat or channel.
 
-## Nachrichten schreiben
+## Send messages
 
 ```js
 const result = await storage.writeMessage(
-  'Backup erfolgreich abgeschlossen.',
-  '@meinchannel',
+  'Backup completed successfully.',
+  '@mychannel',
 );
 
 console.log(result.messageId);
 ```
 
-## Fehlerbehandlung
+## Error handling
 
-Die Dateioperationen geben ein Ergebnisobjekt zurück:
+File operations return a result object:
 
 ```js
 {
@@ -140,15 +139,14 @@ Die Dateioperationen geben ein Ergebnisobjekt zurück:
 }
 ```
 
-Bei Fehlern ist `success` auf `false` gesetzt und die Meldung steht in
-`error`.
+If an operation fails, `success` is set to `false` and the error message is
+available in `error`.
 
-## Sicherheit
+## Security
 
-API-Hash, API-ID und `session.txt` gehören nicht in Git oder in ein
-veröffentlichtes npm-Paket. Verwende Umgebungsvariablen und trage lokale
-Dateien in `.gitignore` ein.
+Never commit your API hash, API ID, or `session.txt` to Git or publish them in
+an npm package. Use environment variables and add local files to `.gitignore`.
 
-## Lizenz
+## License
 
 MIT
