@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "A lightweight free cloud storage solution using Telegram as backend.",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johanneshehl/tgBox.git"
+  },
+  "homepage": "https://github.com/johanneshehl/tgBox#readme",
+  "bugs": {
+    "url": "https://github.com/johanneshehl/tgBox/issues"
+  },
   "files": [
     "index.js",
     "fileService.js"
